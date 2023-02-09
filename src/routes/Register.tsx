@@ -4,6 +4,7 @@ import { RegisterFormType } from "../@types";
 import AuthContext from "../context/AuthContext";
 import * as Yup from "yup";
 import { ErrorMessage, Field, Form, Formik } from "formik";
+import { ColorRing } from "react-loader-spinner";
 
 const Register = () => {
   //prevent double submit:
@@ -25,13 +26,31 @@ const Register = () => {
 
   //if all is valid=> this method is invoked
   const handleRegister = (formValues: RegisterFormType) => {
-    alert(JSON.stringify(formValues));
+    setIsLoading(true);
+
+    //fetch axios /register
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 3000);
   };
   if (isLoggedIn) {
     return <Navigate to="/" />;
   }
   return (
     <div>
+      {isLoading && (
+        <div className="mx-auto w-25">
+          <ColorRing
+            visible={true}
+            height="80"
+            width="80"
+            ariaLabel="blocks-loading"
+            wrapperStyle={{ margin: "0 auto" }}
+            wrapperClass="blocks-wrapper"
+            colors={["#e15b64", "#f47e60", "#f8b26a", "#abbd81", "#849b87"]}
+          />
+        </div>
+      )}
       <Formik
         initialValues={initialValues}
         onSubmit={handleRegister}
@@ -87,7 +106,7 @@ const Register = () => {
             />
           </div>
           <div className="col-12">
-            <button className="btn btn-primary" type="submit">
+            <button disabled={isLoading} className="btn btn-primary" type="submit">
               Register
             </button>
           </div>
