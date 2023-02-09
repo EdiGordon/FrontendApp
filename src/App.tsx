@@ -1,25 +1,4 @@
 
-// import { useContext } from "react";
-// import "./App.css";
-// import DarkModeContext from "./context/dark-mode-context";
-
-// function App() {
-//   const { darkMode, toggleDarkMode } = useContext(DarkModeContext);
-
-//   return <div className="App">
-//     <p>
-//       {darkMode ? "DARK" : "NOT DARK"}
-//     </p>
-
-//     <button onClick={() => {
-//       toggleDarkMode()
-//     }}>TOGGLE DARK</button>
-//   </div>;
-// }
-
-// export default App;
-
-
 import { useContext } from "react";
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
@@ -31,12 +10,12 @@ import Login from "./routes/Login";
 import Register from "./routes/Register";
 
 function App() {
-  const { isLoggedIn } = useContext(AuthContext)
+  const { isLoggedIn } = useContext(AuthContext);
   return (
     <>
       <Navabar />
       <Routes>
-        <Route path="/" element={<Home />} />
+        {isLoggedIn && <Route path="/" element={<Home />} />}
         <Route path="/about" element={<About />} />
         {!isLoggedIn && <Route path="/login" element={<Login />} />}
         {!isLoggedIn && <Route path="/register" element={<Register />} />}

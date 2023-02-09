@@ -1,12 +1,12 @@
+
 import { useContext, useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
-import { LoginFormType, RegisterFormType } from "../@types";
+import { LoginFormType } from "../@types";
 import AuthContext from "../context/AuthContext";
 import * as Yup from "yup";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { ColorRing } from "react-loader-spinner";
 import authService from "../services/auth.service";
-
 
 const Login = () => {
   const nav = useNavigate();
@@ -27,16 +27,18 @@ const Login = () => {
   });
 
   //if all is valid=> this method is invoked
-  const handleRegister = (formValues: LoginFormType) => {
+  const handleLogin = (formValues: LoginFormType) => {
     setIsLoading(true);
 
     const { email, password } = formValues;
     authService
       .login(email, password)
       .then((res) => {
-        console.log(res.data);
+        const token = res.accessToken;
+        const email = res.email;
+        const username = res.username;
         //update the context...
-        //login()
+        login(username, email, token);
         nav("/");
       })
       .catch((e) => {
@@ -69,7 +71,7 @@ const Login = () => {
       )}
       <Formik
         initialValues={initialValues}
-        onSubmit={handleRegister}
+        onSubmit={handleLogin}
         validationSchema={validationSchema}
       >
         <Form className="w-50 mx-auto">
