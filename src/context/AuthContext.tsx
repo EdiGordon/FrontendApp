@@ -9,7 +9,7 @@ const initialState: AuthContextType = {
 
 const AuthContext = createContext<AuthContextType>(initialState);
 
-const UserContextProvider = ({ children }: ChildProps) => {
+const AuthContextProvider = ({ children }: ChildProps) => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [username, setUsername] = useState<string | undefined>(undefined);
     const [email, setEmail] = useState<string | undefined>(undefined);
@@ -36,3 +36,9 @@ const UserContextProvider = ({ children }: ChildProps) => {
         </AuthContext.Provider>
     );
 };
+
+//the provider is only used in index.tsx <Provider>
+export { AuthContext, AuthContextProvider };
+
+//used in all the app:
+export default AuthContext;
