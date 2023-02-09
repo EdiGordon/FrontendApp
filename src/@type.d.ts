@@ -15,3 +15,10 @@ export type AuthContextType = {
 export type ChildProps = {
     children?: React.ReactNode;
 };
+
+
+export type RegisterFormType = {
+    username: string;
+    email: string;
+    password: string;
+};
