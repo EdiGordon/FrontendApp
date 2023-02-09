@@ -36,12 +36,13 @@ const Register = () => {
     authService
       .register(username, email, password)
       .then((res) => {
-        console.log(res);
+        console.log(res.data);
         //swal
-        nav("/");
+        nav("/login");
       })
       .catch((e) => {
         console.log(e);
+        alert(e); //swal //modal
         setErrMessage(e);
       })
       .finally(() => {
