@@ -1,6 +1,6 @@
-import { ChildProps } from '../@type';
+import { ChildProps } from '../@types';
 import { createContext, useState } from "react";
-import { DarkModeContextType } from "../@type";
+import { DarkModeContextType } from "../@types";
 
 //initial state:
 const initialState: DarkModeContextType = {

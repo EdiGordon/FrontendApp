@@ -1,16 +1,100 @@
 import { useContext, useState } from "react";
 import { Navigate } from "react-router-dom";
+import { RegisterFormType } from "../@types";
 import AuthContext from "../context/AuthContext";
+import * as Yup from "yup";
+import { ErrorMessage, Field, Form, Formik } from "formik";
 
 const Register = () => {
   //prevent double submit:
   const [isLoading, setIsLoading] = useState(false);
   const { isLoggedIn } = useContext(AuthContext);
 
+  const initialValues = {
+    username: "",
+    email: "",
+    password: "",
+  };
+
+  //Validations:
+  const validationSchema = Yup.object({
+    username: Yup.string().min(3, "Name is too short").required(),
+    email: Yup.string().email("Must be a valid email").required(),
+    password: Yup.string().min(3, "Password is too short").required(),
+  });
+
+  //if all is valid=> this method is invoked
+  const handleRegister = (formValues: RegisterFormType) => {
+    alert(JSON.stringify(formValues));
+  };
   if (isLoggedIn) {
     return <Navigate to="/" />;
   }
-  return <div>Register</div>;
+  return (
+    <div>
+      <Formik
+        initialValues={initialValues}
+        onSubmit={handleRegister}
+        validationSchema={validationSchema}
+      >
+        <Form className="w-50 mx-auto">
+          <div>
+            <label htmlFor="username" className="form-label">
+              User Name
+            </label>
+            <Field
+              name="username"
+              type="text"
+              className="form-control"
+              id="username"
+            />
+            <ErrorMessage
+              name="username"
+              component="div"
+              className="alert alert-danger"
+            />
+          </div>
+          <div>
+            <label htmlFor="email" className="form-label">
+              Email
+            </label>
+            <Field
+              name="email"
+              type="email"
+              className="form-control"
+              id="email"
+            />
+            <ErrorMessage
+              name="email"
+              component="div"
+              className="alert alert-danger"
+            />
+          </div>
+          <div>
+            <label htmlFor="password" className="form-label">
+              Password
+            </label>
+            <Field
+              name="password"
+              type="password"
+              className="form-control"
+              id="password"
+            />
+            <ErrorMessage
+              name="password"
+              component="div"
+              className="alert alert-danger"
+            />
+          </div>
+          <div className="col-12">
+            <button className="btn btn-primary" type="submit">
+              Register
+            </button>
+          </div>
+        </Form>
+      </Formik>
+    </div>
+  );
 };
 
 export default Register;

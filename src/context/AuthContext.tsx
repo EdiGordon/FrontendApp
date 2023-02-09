@@ -1,5 +1,5 @@
 import { createContext, useState } from "react";
-import { AuthContextType, ChildProps } from "../@type";
+import { AuthContextType, ChildProps } from "../@types";
 
 const initialState: AuthContextType = {
     isLoggedIn: false,
