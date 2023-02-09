@@ -43,7 +43,7 @@ const Register = () => {
       .catch((e) => {
         console.log(e);
         alert(e); //swal //modal
-        setErrMessage(e);
+        setErrMessage(JSON.stringify(e.response.data));
       })
       .finally(() => {
         setIsLoading(false);
